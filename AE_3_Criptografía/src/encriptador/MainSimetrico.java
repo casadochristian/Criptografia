@@ -175,7 +175,5 @@ public class MainSimetrico {
 
 		} while (intentos > 0);
 	}
-private void cargarUsuarios() {
-	
-}
+
 }
