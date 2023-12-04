@@ -18,66 +18,51 @@ import java.util.Scanner;
 public class MainSimetrico {	
 
 	public static void main(String[] args) throws NoSuchAlgorithmException {
+		//Creamos los objetos Usuario
+		Usuario user1 = new Usuario("Tony", "admin");
+		Usuario user2 = new Usuario("Steve", "Hail Hydra");
+		Usuario user3 = new Usuario("Peter", "maryjane");
 		
-	
-		ResumenHash rh = new ResumenHash();
-
-		// Creamos la contraseña a partir de la cual queremos crear su resumen.
-		// Lo pasamos a bytes ya que se necesita que la información este así para poder crear su resumen hash.
-		byte[] password1 = "admin".getBytes();
-		byte[] password2 = "Hail Hydra".getBytes();
-		byte[] password3 = "maryjane".getBytes();
-
+		//convertimos las contraseñas en bytes
+		byte[] password1 = user1.getPassword().getBytes();
+		byte[] password2 = user2.getPassword().getBytes();
+		byte[] password3 = user3.getPassword().getBytes();	
 		
 		// Creamos un objeto MessageDigest a través del método estático
 		// getInstance() al que se le pasa el tipo de algoritmo que vamos a
 		// utilizar.
 		MessageDigest md1 = MessageDigest.getInstance("SHA-512");
 		MessageDigest md2 = MessageDigest.getInstance("SHA-512");
-		MessageDigest md3 = MessageDigest.getInstance("SHA-512");
-		
+		MessageDigest md3 = MessageDigest.getInstance("SHA-512");		
 
-		//Actualizamos las contraseñas de los usuarios y lo preparamos para convertirlo a hash
-		
+		//Actualizamos las contraseñas de los usuarios y lo preparamos para convertirlo a hash		
 		md1.update(password1);
-
 		md2.update(password2);
-
 		md3.update(password3);
 		
-
 		// Ahora ejecutamos el método "digest()" para convertirlo a hash, pero esta en binario.
-		byte[] password1Hasheada = md1.digest();
-		
-
+		byte[] password1Hasheada = md1.digest();	
 		byte[] password2Hasheada = md2.digest();
-		
-
-		byte[] password3Hasheada = md3.digest();
-		
+		byte[] password3Hasheada = md3.digest();		
 		
 		// Lo pasamos a codificación BASE 64 para que sea mas legible.
 		// Puede ser util si queremos guardar la información o enviar la información.
 		String password1_HashBase64 = Base64.getEncoder().encodeToString(password1Hasheada);
-
 		String password2_HashBase64 = Base64.getEncoder().encodeToString(password2Hasheada);
-
 		String password3_HashBase64 = Base64.getEncoder().encodeToString(password3Hasheada);
-
 
 		// Creamos una lista donde almacenar los usuarios. 
 		List<Usuario> listaUsuarios = new ArrayList<>();
-
-		// Usuarios en memoria con su nombre y contraseña hasheada
-		Usuario u1 = new Usuario("Tony", password1_HashBase64);
-		Usuario u2 = new Usuario("Steve", password2_HashBase64);
-		Usuario u3 = new Usuario("Peter", password3_HashBase64);
+		
+		//cambiamos las contraseñas originales por las contraseñas hasheadas
+		user1.setPassword(password1_HashBase64);
+		user2.setPassword(password2_HashBase64);
+		user3.setPassword(password3_HashBase64);
 
 		// Guardamos los usuarios en una lista para poder acceder a ellos.
-		listaUsuarios.add(u1);
-		listaUsuarios.add(u2);
-		listaUsuarios.add(u3);
-		
+		listaUsuarios.add(user1);
+		listaUsuarios.add(user2);
+		listaUsuarios.add(user3);		
 
 		// Con esta variable controlamos las veces que el usuario puede poner los datos.
 		int intentos = 3;
@@ -90,9 +75,9 @@ public class MainSimetrico {
 			String nombreUser = sc.nextLine();
 			
 		
-			System.out.println("\nPASSWORD: ");
+			System.out.println("PASSWORD: ");
 			String passwordUser = sc.nextLine();
-	
+			ResumenHash rh = new ResumenHash();
 			
 			// Por cada usuario que haya en la lista 
 			// comparamos que si tanto el nombre como la contraseña hasheada es igual a lo que el usuario nos da por scanner
@@ -167,6 +152,7 @@ public class MainSimetrico {
 				}
 				
 						}while(opcion != "3");
+							sc.close();
 							return;			
 			
 						//capturamos las excepciones con GeneralSecurityException
@@ -189,6 +175,7 @@ public class MainSimetrico {
 
 		} while (intentos > 0);
 	}
-
-
+private void cargarUsuarios() {
+	
+}
 }
