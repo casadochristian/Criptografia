@@ -141,14 +141,13 @@ public class MainSimetrico {
 					break;
 				case "3":
 					System.out.println("Saliendo del programa");
-
 					System.exit(0);
 					break;
 					
 				default:
 					System.out.println("----------  OPCION NO VÁLIDA  ----------");
 					System.out.println("Por favor, introduce una de las siguientes opciones");
-					break;					
+									
 				}
 				
 						}while(opcion != "3");
